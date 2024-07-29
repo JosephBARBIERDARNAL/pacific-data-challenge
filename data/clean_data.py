@@ -40,3 +40,14 @@ gender_pay_gap_df.drop(columns=['URBANIZATION', 'OCCUPATION'], inplace=True)
 gender_pay_gap_df = gender_pay_gap_df.sort_values(by=["TIME_PERIOD", "Pacific Island Countries and territories", "Urbanization"])
 gender_pay_gap_df.drop(columns=["GEO_PICT"], inplace=True)
 gender_pay_gap_df.to_csv("data/gender-pay-gap.csv", index=False)
+
+# employment rates
+chomage_df = pd.read_csv("employment-rates/employment-rates.csv")
+chomage_df.rename(columns={'Pacific Island Countries and territories':'island'}, inplace=True)
+chomage_df = chomage_df[chomage_df["INDICATOR"]=="UNEMPRATE"]
+chomage_df = chomage_df[chomage_df["Sex"].isin(["Male", "Female"])]
+chomage_df = chomage_df[chomage_df["Age"].isin(["25-54", "55-64"])]
+chomage_df = chomage_df[["island", "TIME_PERIOD", "OBS_VALUE", "Age", "Sex"]]
+chomage_df.columns = ["island", "year", "unemployment_rate", "age", "sex"]
+chomage_df.sort_values(by=["island", "year", "age", "sex"], inplace=True)
+chomage_df.to_csv("data/employment-rates.csv", index=False)
