@@ -26,11 +26,6 @@ employment_df.columns = ["island", "year", "count_employed", "age", "sex", "disa
 employment_df = employment_df[employment_df["age"].isin(["55-64", "25-54"])]
 employment_df = employment_df[employment_df["disability"]=="_T"]
 employment_df.sort_values(by=["sex", "island", "year", "age"], inplace=True)
-employment_df.loc[employment_df["sex"]=="Female", "female_employed"] = employment_df.loc[employment_df["sex"]=="Female", "count_employed"]
-employment_df.loc[employment_df["sex"]=="Female", "male_employed"] = employment_df.loc[employment_df["sex"]=="Male", "count_employed"].to_list()
-employment_df = employment_df.loc[employment_df["sex"]=="Female"]
-employment_df.drop(columns=["sex", "disability", "count_employed"], inplace=True)
-employment_df["ratio"] = (employment_df["female_employed"]-employment_df["male_employed"])/employment_df["male_employed"] *100
 employment_df.to_csv("data/employment.csv", index=False)
 
 # gender pay gap
